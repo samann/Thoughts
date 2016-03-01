@@ -49,13 +49,22 @@ public class CreateThoughtActivity extends AppCompatActivity {
         record.setOutCome(outcome.getText().toString());
         record.setBeforeRating(0.0);
         record.setAfterRating(0.0);
-        mApplication.mFirebase.child("thoughts").push().setValue(record);
+        mApplication.mFirebase.child(Utils.THOUGHT_RECORD_FIREBASE).push().setValue(record);
         finish();
     }
 
     @Click(R.id.error_button)
     void errorWasTapped() {
         Intent intent = new Intent(this, ThoughtErrorsActivity_.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+
+        }
     }
 }

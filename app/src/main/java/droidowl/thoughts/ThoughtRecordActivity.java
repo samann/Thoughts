@@ -38,7 +38,7 @@ public class ThoughtRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thought_record);
         if (getIntent().getExtras() != null) {
             Bundle extras = getIntent().getExtras();
-            ThoughtRecord re = extras.getParcelable("record");
+            ThoughtRecord re = extras.getParcelable(Utils.THOUGHT_RECORD_EXTRAS);
             if (re == null) {
                 Log.d("TAG", "NULL");
             } else {

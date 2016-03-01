@@ -86,7 +86,8 @@ public class ThoughtActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),
                         ThoughtRecordActivity_.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("record", mRecords.get(position));
+                bundle.putParcelable(Utils.THOUGHT_RECORD_EXTRAS,
+                        mRecords.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -110,7 +111,8 @@ public class ThoughtActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_clear) {
-            mApplication.mFirebase.child("thoughts").removeValue();
+            mApplication.mFirebase.child(Utils.THOUGHT_RECORD_FIREBASE)
+                    .removeValue();
             mRecords.clear();
             mAdapter.notifyDataSetChanged();
         }
@@ -127,8 +129,9 @@ public class ThoughtActivity extends AppCompatActivity {
 
 
     private void updateList() {
-        Query query = mApplication.mFirebase.child("thoughts").orderByChild
-                ("thoughts");
+        Query query = mApplication.mFirebase.child
+                (Utils.THOUGHT_RECORD_FIREBASE).orderByChild
+                (Utils.THOUGHT_RECORD_FIREBASE);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
