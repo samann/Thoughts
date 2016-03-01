@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="droidowl.thoughts.CreateThoughtActivity"
+    android:background="@color/background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="359dp"
+                android:id="@+id/relativeLayout">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trigger_edit_text"
+                    android:hint="Triggers"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/feelings_edit_text"
+                    android:layout_below="@+id/trigger_edit_text"
+                    android:layout_alignParentStart="true"
+                    android:hint="Feelings"
+                    android:layout_alignEnd="@+id/trigger_edit_text"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/unhelpful_edit_text"
+                    android:layout_below="@+id/feelings_edit_text"
+                    android:layout_alignParentEnd="true"
+                    android:hint="Unhelpful Thoughts"
+                    android:layout_alignParentStart="true"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/support_edit_text"
+                    android:layout_below="@+id/unhelpful_edit_text"
+                    android:layout_alignParentEnd="true"
+                    android:hint="Supporting Facts"
+                    android:layout_alignParentStart="true"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/oppose_edit_text"
+                    android:layout_below="@+id/support_edit_text"
+                    android:layout_alignParentStart="true"
+                    android:hint="Opposing Facts"
+                    android:layout_alignEnd="@+id/support_edit_text"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/perspective_edit_text"
+                    android:layout_below="@+id/oppose_edit_text"
+                    android:layout_alignParentStart="true"
+                    android:hint="New Perspective"
+                    android:layout_alignEnd="@+id/oppose_edit_text"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/outcome_edit_text"
+                    android:layout_below="@+id/perspective_edit_text"
+                    android:hint="Outcome"
+                    android:layout_alignParentStart="true"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thought Errors"
+                    android:id="@+id/error_button"
+                    android:layout_below="@+id/outcome_edit_text"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/scrollView"
+                android:layout_alignParentStart="true"
+                android:layout_alignEnd="@+id/scrollView"
+                android:layout_alignParentEnd="false">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CANCEL"
+                    android:id="@+id/cancel_button"
+                    android:layout_gravity="left|top"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DONE"
+                    android:id="@+id/done_button"
+                    android:layout_alignBottom="@+id/scrollView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="36dp"
+                    android:layout_gravity="right"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
