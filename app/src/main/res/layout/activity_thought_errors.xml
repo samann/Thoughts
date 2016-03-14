@@ -15,7 +15,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/error_list_view"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:choiceMode="multipleChoice"/>
+        android:choiceMode="multipleChoice"
+        android:layout_above="@+id/done_button"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="done"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/error_list_view"
+        android:id="@+id/done_button"/>
 </RelativeLayout>

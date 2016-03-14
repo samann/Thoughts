@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="thinking_errors">
+        <item>All or Nothing</item>
+        <item>Overgeneralizing</item>
+        <item>Filtering</item>
+        <item>Mind Reading</item>
+        <item>Catastrophizing</item>
+        <item>Emotional Reasoning</item>
+        <item>Labeling</item>
+        <item>Fortune Telling</item>
+        <item>Personalization</item>
+        <item>Unreal Ideal</item>
+    </array>
+</resources>

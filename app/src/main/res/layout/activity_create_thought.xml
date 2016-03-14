@@ -22,18 +22,22 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:weightSum="1">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="359dp"
-                android:id="@+id/relativeLayout">
+                android:layout_height="382dp"
+                android:id="@+id/relativeLayout"
+                >
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/trigger_edit_text"
                     android:hint="Triggers"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"/>
 
@@ -42,6 +46,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/feelings_edit_text"
                     android:layout_below="@+id/trigger_edit_text"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:layout_alignParentStart="true"
                     android:hint="Feelings"
                     android:layout_alignEnd="@+id/trigger_edit_text"/>
@@ -49,6 +55,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:id="@+id/unhelpful_edit_text"
                     android:layout_below="@+id/feelings_edit_text"
                     android:layout_alignParentEnd="true"
@@ -57,6 +65,8 @@
 
                 <EditText
                     android:layout_width="match_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:layout_height="wrap_content"
                     android:id="@+id/support_edit_text"
                     android:layout_below="@+id/unhelpful_edit_text"
@@ -67,6 +77,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:id="@+id/oppose_edit_text"
                     android:layout_below="@+id/support_edit_text"
                     android:layout_alignParentStart="true"
@@ -76,6 +88,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:id="@+id/perspective_edit_text"
                     android:layout_below="@+id/oppose_edit_text"
                     android:layout_alignParentStart="true"
@@ -86,48 +100,45 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/outcome_edit_text"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:layout_below="@+id/perspective_edit_text"
                     android:hint="Outcome"
                     android:layout_alignParentStart="true"/>
 
-                <Button
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thought Errors"
-                    android:id="@+id/error_button"
                     android:layout_below="@+id/outcome_edit_text"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_alignParentStart="true">
+
+                    <Button
+                        android:layout_width="138dp"
+                        android:layout_height="wrap_content"
+                        android:text="Thinking Error Info"
+                        android:id="@+id/error_button"
+                        android:layout_gravity="center"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CANCEL"
+                        android:id="@+id/cancel_button"
+                        android:layout_gravity="left|center_vertical"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DONE"
+                        android:id="@+id/done_button"
+                        android:layout_gravity="right|center_vertical"/>
+
+                </FrameLayout>
 
             </RelativeLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/scrollView"
-                android:layout_alignParentStart="true"
-                android:layout_alignEnd="@+id/scrollView"
-                android:layout_alignParentEnd="false">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CANCEL"
-                    android:id="@+id/cancel_button"
-                    android:layout_gravity="left|top"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="DONE"
-                    android:id="@+id/done_button"
-                    android:layout_alignBottom="@+id/scrollView"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="36dp"
-                    android:layout_gravity="right"/>
-
-            </FrameLayout>
-
         </LinearLayout>
     </ScrollView>
+
 
 </RelativeLayout>

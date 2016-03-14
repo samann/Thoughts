@@ -3,6 +3,8 @@ package droidowl.thoughts;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by droidowl on 2/29/16.
  */
@@ -14,6 +16,8 @@ public class ThoughtRecord implements Parcelable {
     String opposingFacts;
     String newPerspective;
     String outCome;
+    String key;
+    List<ThoughtError> thoughtErrors;
 
     double beforeRating;
     double afterRating;
@@ -41,6 +45,22 @@ public class ThoughtRecord implements Parcelable {
         this.outCome = outCome;
         this.beforeRating = beforeRating;
         this.afterRating = afterRating;
+    }
+
+    public List<ThoughtError> getThoughtErrors() {
+        return thoughtErrors;
+    }
+
+    public void setThoughtErrors(List<ThoughtError> thoughtErrors) {
+        this.thoughtErrors = thoughtErrors;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getTrigger() {
@@ -129,6 +149,8 @@ public class ThoughtRecord implements Parcelable {
         dest.writeString(this.opposingFacts);
         dest.writeString(this.newPerspective);
         dest.writeString(this.outCome);
+        dest.writeString(this.key);
+        dest.writeTypedList(thoughtErrors);
         dest.writeDouble(this.beforeRating);
         dest.writeDouble(this.afterRating);
     }
@@ -141,11 +163,13 @@ public class ThoughtRecord implements Parcelable {
         this.opposingFacts = in.readString();
         this.newPerspective = in.readString();
         this.outCome = in.readString();
+        this.key = in.readString();
+        this.thoughtErrors = in.createTypedArrayList(ThoughtError.CREATOR);
         this.beforeRating = in.readDouble();
         this.afterRating = in.readDouble();
     }
 
-    public static final Parcelable.Creator<ThoughtRecord> CREATOR = new Parcelable.Creator<ThoughtRecord>() {
+    public static final Creator<ThoughtRecord> CREATOR = new Creator<ThoughtRecord>() {
         public ThoughtRecord createFromParcel(Parcel source) {
             return new ThoughtRecord(source);
         }
