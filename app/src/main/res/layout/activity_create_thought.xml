@@ -11,14 +11,16 @@
     tools:context="droidowl.thoughts.CreateThoughtActivity"
     android:background="@color/background">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true">
-
+        >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -36,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/trigger_edit_text"
                     android:hint="Triggers"
+                    android:singleLine="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_alignParentTop="true"
@@ -46,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/feelings_edit_text"
                     android:layout_below="@+id/trigger_edit_text"
+                    android:singleLine="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_alignParentStart="true"
@@ -55,6 +59,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:id="@+id/unhelpful_edit_text"
@@ -65,6 +70,7 @@
 
                 <EditText
                     android:layout_width="match_parent"
+                    android:singleLine="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_height="wrap_content"
@@ -76,6 +82,7 @@
 
                 <EditText
                     android:layout_width="match_parent"
+                    android:singleLine="true"
                     android:layout_height="wrap_content"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
@@ -89,6 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="true"
+                    android:singleLine="true"
                     android:focusableInTouchMode="true"
                     android:id="@+id/perspective_edit_text"
                     android:layout_below="@+id/oppose_edit_text"
@@ -103,42 +111,43 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_below="@+id/perspective_edit_text"
+                    android:singleLine="true"
                     android:hint="Outcome"
                     android:layout_alignParentStart="true"/>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/outcome_edit_text"
-                    android:layout_alignParentStart="true">
-
-                    <Button
-                        android:layout_width="138dp"
-                        android:layout_height="wrap_content"
-                        android:text="Thinking Error Info"
-                        android:id="@+id/error_button"
-                        android:layout_gravity="center"/>
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CANCEL"
-                        android:id="@+id/cancel_button"
-                        android:layout_gravity="left|center_vertical"/>
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DONE"
-                        android:id="@+id/done_button"
-                        android:layout_gravity="right|center_vertical"/>
-
-                </FrameLayout>
 
             </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/outcome_edit_text"
+            android:layout_alignParentStart="true">
+
+            <Button
+                android:layout_width="138dp"
+                android:layout_height="wrap_content"
+                android:text="Thinking Error Info"
+                android:id="@+id/error_button"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CANCEL"
+                android:id="@+id/cancel_button"
+                android:layout_gravity="left|center_vertical"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DONE"
+                android:id="@+id/done_button"
+                android:layout_gravity="right|center_vertical"/>
+
+        </FrameLayout>
+    </LinearLayout>
 
 </RelativeLayout>

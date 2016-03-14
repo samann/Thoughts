@@ -36,16 +36,24 @@ public class ThoughtAdapter extends ArrayAdapter<ThoughtRecord> {
             holder = new ThoughtHolder();
             holder.triggerTextView = (TextView)row.findViewById(R.id
                     .list_item_text_view);
+            holder.dateTextView = (TextView)row.findViewById(R.id
+                    .date_text_view) ;
+            holder.timeTextView = (TextView)row.findViewById(R.id
+                    .time_text_view);
             row.setTag(holder);
         } else {
             holder = (ThoughtHolder) row.getTag();
         }
         ThoughtRecord record = mRecords.get(position);
         holder.triggerTextView.setText(record.getTrigger());
+        holder.dateTextView.setText(record.getDate());
+        holder.timeTextView.setText(record.getTime());
         return row;
     }
 
     static class ThoughtHolder {
         TextView triggerTextView;
+        TextView dateTextView;
+        TextView timeTextView;
     }
 }

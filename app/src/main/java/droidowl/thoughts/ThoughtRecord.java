@@ -17,6 +17,8 @@ public class ThoughtRecord implements Parcelable {
     String newPerspective;
     String outCome;
     String key;
+    String date;
+    String time;
     List<ThoughtError> thoughtErrors;
 
     double beforeRating;
@@ -61,6 +63,22 @@ public class ThoughtRecord implements Parcelable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getTrigger() {
@@ -150,6 +168,8 @@ public class ThoughtRecord implements Parcelable {
         dest.writeString(this.newPerspective);
         dest.writeString(this.outCome);
         dest.writeString(this.key);
+        dest.writeString(this.date);
+        dest.writeString(this.time);
         dest.writeTypedList(thoughtErrors);
         dest.writeDouble(this.beforeRating);
         dest.writeDouble(this.afterRating);
@@ -164,6 +184,8 @@ public class ThoughtRecord implements Parcelable {
         this.newPerspective = in.readString();
         this.outCome = in.readString();
         this.key = in.readString();
+        this.date = in.readString();
+        this.time = in.readString();
         this.thoughtErrors = in.createTypedArrayList(ThoughtError.CREATOR);
         this.beforeRating = in.readDouble();
         this.afterRating = in.readDouble();

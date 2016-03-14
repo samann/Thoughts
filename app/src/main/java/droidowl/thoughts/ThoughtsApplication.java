@@ -19,5 +19,6 @@ public class ThoughtsApplication extends Application {
         super.onCreate();
         Firebase.setAndroidContext(getApplicationContext());
         mFirebase = new Firebase("https://droidowlthoughts.firebaseio.com");
+        mFirebase.keepSynced(true);
     }
 }

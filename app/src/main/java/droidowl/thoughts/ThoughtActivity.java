@@ -64,7 +64,6 @@ public class ThoughtActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
 
             @Override
@@ -90,6 +89,18 @@ public class ThoughtActivity extends AppCompatActivity {
                         mRecords.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ThoughtRecord record = mAdapter.getItem(position);
+                mApplication.mFirebase.child("thoughts").child(record.getKey
+                        ()).removeValue();
+                mRecords.remove(position);
+                mAdapter.notifyDataSetChanged();
+                return true;
             }
         });
 

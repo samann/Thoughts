@@ -14,6 +14,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @EActivity
@@ -64,7 +65,12 @@ public class CreateThoughtActivity extends AppCompatActivity {
 
     @Click(R.id.done_button)
     void doneWasTapped() {
-            ThoughtRecord record = new ThoughtRecord();
+        ThoughtRecord record;
+        if (mRecord == null) {
+            record = new ThoughtRecord();
+        } else {
+            record = mRecord;
+        }
             record.setTrigger(trigger.getText().toString());
             record.setBeforeFeelings(feelings.getText().toString());
             record.setUnhelpfulThoughts(unhelpul.getText().toString());
@@ -75,6 +81,12 @@ public class CreateThoughtActivity extends AppCompatActivity {
             record.setBeforeRating(0.0);
             record.setAfterRating(0.0);
             record.setThoughtErrors(selectedErrors);
+        Calendar c = Calendar.getInstance();
+        String date = c.get(Calendar.MONTH) + "/" + c.get(Calendar
+                .DAY_OF_MONTH) + "/" + c.get(Calendar.YEAR);
+        record.setDate(date);
+        String time = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
+        record.setTime(time);
             Firebase ref = mApplication.mFirebase.child(Utils
                     .THOUGHT_RECORD_FIREBASE).push();
             record.setKey(ref.getKey());
@@ -86,6 +98,11 @@ public class CreateThoughtActivity extends AppCompatActivity {
     void errorWasTapped() {
         Intent intent = new Intent(this, ThoughtErrorsActivity_.class);
         startActivityForResult(intent, 1);
+    }
+
+    @Click(R.id.cancel_button)
+    void cancel() {
+        finish();
     }
 
     @Override
