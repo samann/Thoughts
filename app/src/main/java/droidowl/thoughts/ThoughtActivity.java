@@ -128,10 +128,14 @@ public class ThoughtActivity extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
         }
 
+        if (id == R.id.action_add_value) {
+
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
-    @Click(R.id.fab)
+    @Click(R.id.add_thought_fab)
     void createThoughtWasTapped() {
         Intent intent = new Intent(this, CreateThoughtActivity_.class);
         startActivity(intent);
