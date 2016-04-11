@@ -29,7 +29,7 @@ import java.util.List;
 @EActivity
 public class ThoughtActivity extends AppCompatActivity {
 
-    @ViewById(R.id.fab)
+    @ViewById(R.id.add_thought_fab)
     FloatingActionButton createThoughtButton;
     @ViewById(R.id.thoughts_list_view)
     ListView mListView;
@@ -128,8 +128,9 @@ public class ThoughtActivity extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
         }
 
-        if (id == R.id.action_add_value) {
-
+        if (id == R.id.action_add_values) {
+            Intent intent = new Intent(this, ValuesActivity_.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

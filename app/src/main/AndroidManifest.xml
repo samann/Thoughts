@@ -27,6 +27,8 @@
         </activity>
         <activity android:name=".ThoughtErrorsActivity_">
         </activity>
+        <activity android:name=".ValuesActivity_">
+        </activity>
     </application>
 
 </manifest>
