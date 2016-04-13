@@ -1,8 +1,18 @@
 package droidowl.thoughts;
 
+import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -37,13 +47,73 @@ public class ValuesActivity extends AppCompatActivity{
         mValues = new ArrayList<>();
         mAdapter = new ValuesAdapter(this, R.layout.value_list_item, mValues);
         listView.setAdapter(mAdapter);
+        Firebase valueBase = mApplication.mFirebase.child("value");
+        valueBase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    ThoughtValue value = dataSnapshot.getValue(ThoughtValue.class);
+                    mValues.add(value);
+                    mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     @Click(R.id.add_value_fab)
     void addWasTapped() {
         if (mValues != null) {
-            mValues.add(new ThoughtValue("Hi", "7"));
-            mAdapter.notifyDataSetChanged();
+            LayoutInflater inflater = (this).getLayoutInflater();
+            final View v = inflater.inflate(R.layout.activity_create_value,
+                    null);
+            AlertDialog.Builder builder = new AlertDialog.Builder
+                    (this);
+            // Get the layout inflater
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the
+            // dialog layout
+            builder.setTitle("Add A Value");
+            builder.setView(v);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    EditText titleText = (EditText) v.findViewById(R.id
+                            .title_edittext);
+                    EditText rankText = (EditText) v.findViewById(R.id
+                            .rank_edittext);
+                    ThoughtValue value = new ThoughtValue(titleText.getText()
+                            .toString(),
+                            rankText.getText().toString());
+                    Firebase ref = mApplication.mFirebase.child("value").push();
+                    ref.setValue(value);
+                }
+            });
+            builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            builder.create();
+            builder.show();
         }
     }
 }

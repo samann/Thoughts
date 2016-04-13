@@ -13,6 +13,8 @@ public class ThoughtValue {
         this.rank = rank;
     }
 
+    public ThoughtValue() { }
+
     public String getTitle() {
         return title;
     }
