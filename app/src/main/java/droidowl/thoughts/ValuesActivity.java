@@ -86,10 +86,6 @@ public class ValuesActivity extends AppCompatActivity{
                     null);
             AlertDialog.Builder builder = new AlertDialog.Builder
                     (this);
-            // Get the layout inflater
-            // Inflate and set the layout for the dialog
-            // Pass null as the parent view because its going in the
-            // dialog layout
             builder.setTitle("Add A Value");
             builder.setView(v);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

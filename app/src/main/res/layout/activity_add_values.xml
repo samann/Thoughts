@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/background"
+              android:orientation="vertical"
               android:weightSum="1">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center_horizontal"
         android:text="Personal Values"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <ListView
+        android:id="@+id/values_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.98"
-        android:id="@+id/values_list_view">
+        android:layout_weight="0.98">
     </ListView>
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_value_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:id="@+id/add_value_fab"
         android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_input_add"/>
 </LinearLayout>
