@@ -7,10 +7,12 @@ public class ThoughtValue {
 
     String title;
     String rank;
+    String key;
 
-    public ThoughtValue(String title, String rank) {
+    public ThoughtValue(String title, String rank, String key) {
         this.title = title;
         this.rank = rank;
+        this.key = key;
     }
 
     public ThoughtValue() { }
@@ -29,5 +31,13 @@ public class ThoughtValue {
 
     public void setRank(String rank) {
         this.rank = rank;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

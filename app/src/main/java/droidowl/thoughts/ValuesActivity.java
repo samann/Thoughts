@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -63,7 +64,9 @@ public class ValuesActivity extends AppCompatActivity{
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                ThoughtValue value = dataSnapshot.getValue(ThoughtValue.class);
+                mValues.remove(value);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -74,6 +77,16 @@ public class ValuesActivity extends AppCompatActivity{
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ThoughtValue value = mAdapter.getItem(position);
+                mApplication.mFirebase.child("value").child(value.getKey())
+                        .removeValue();
+                return true;
             }
         });
     }
@@ -95,10 +108,11 @@ public class ValuesActivity extends AppCompatActivity{
                             .title_edittext);
                     EditText rankText = (EditText) v.findViewById(R.id
                             .rank_edittext);
+                    Firebase ref = mApplication.mFirebase.child("value")
+                            .push();
                     ThoughtValue value = new ThoughtValue(titleText.getText()
                             .toString(),
-                            rankText.getText().toString());
-                    Firebase ref = mApplication.mFirebase.child("value").push();
+                            rankText.getText().toString(), ref.getKey());
                     ref.setValue(value);
                 }
             });
