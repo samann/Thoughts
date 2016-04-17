@@ -64,9 +64,6 @@ public class ValuesActivity extends AppCompatActivity{
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                ThoughtValue value = dataSnapshot.getValue(ThoughtValue.class);
-                mValues.remove(value);
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -86,6 +83,8 @@ public class ValuesActivity extends AppCompatActivity{
                 ThoughtValue value = mAdapter.getItem(position);
                 mApplication.mFirebase.child("value").child(value.getKey())
                         .removeValue();
+                mValues.remove(value);
+                mAdapter.notifyDataSetChanged();
                 return true;
             }
         });
