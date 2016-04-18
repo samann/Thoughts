@@ -22,6 +22,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,9 +53,11 @@ public class ValuesActivity extends AppCompatActivity{
         valueBase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    ThoughtValue value = dataSnapshot.getValue(ThoughtValue.class);
-                    mValues.add(value);
-                    mAdapter.notifyDataSetChanged();
+                ThoughtValue value = dataSnapshot.getValue(ThoughtValue.class);
+                mValues.add(value);
+                mAdapter.notifyDataSetChanged();
+                Collections.sort(mValues);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -111,7 +114,8 @@ public class ValuesActivity extends AppCompatActivity{
                             .push();
                     ThoughtValue value = new ThoughtValue(titleText.getText()
                             .toString(),
-                            rankText.getText().toString(), ref.getKey());
+                            Integer.parseInt(rankText.getText().toString()), ref
+                    .getKey());
                     ref.setValue(value);
                 }
             });

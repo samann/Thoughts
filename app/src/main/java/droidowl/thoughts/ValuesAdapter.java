@@ -45,7 +45,7 @@ public class ValuesAdapter extends ArrayAdapter<ThoughtValue> {
             holder = (ValueHolder) row.getTag();
         }
         ThoughtValue value = mValues.get(position);
-        holder.rank.setText(value.getRank());
+        holder.rank.setText(String.valueOf(value.getRank()));
         holder.title.setText(value.getTitle());
         return row;
     }

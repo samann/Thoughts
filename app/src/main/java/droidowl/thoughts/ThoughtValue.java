@@ -3,13 +3,13 @@ package droidowl.thoughts;
 /**
  * Created by droidowl on 4/11/16.
  */
-public class ThoughtValue {
+public class ThoughtValue implements Comparable<ThoughtValue>{
 
     String title;
-    String rank;
+    int rank;
     String key;
 
-    public ThoughtValue(String title, String rank, String key) {
+    public ThoughtValue(String title, int rank, String key) {
         this.title = title;
         this.rank = rank;
         this.key = key;
@@ -25,11 +25,11 @@ public class ThoughtValue {
         this.title = title;
     }
 
-    public String getRank() {
+    public int getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
+    public void setRank(int rank) {
         this.rank = rank;
     }
 
@@ -39,5 +39,10 @@ public class ThoughtValue {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public int compareTo(ThoughtValue another) {
+        return this.rank - another.getRank();
     }
 }
