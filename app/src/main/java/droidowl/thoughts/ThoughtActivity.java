@@ -15,8 +15,6 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
 
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
@@ -140,28 +138,5 @@ public class ThoughtActivity extends AppCompatActivity {
     void createThoughtWasTapped() {
         Intent intent = new Intent(this, CreateThoughtActivity_.class);
         startActivity(intent);
-    }
-
-
-
-    private void updateList() {
-        Query query = mApplication.mFirebase.child
-                (Utils.THOUGHT_RECORD_FIREBASE).orderByChild
-                (Utils.THOUGHT_RECORD_FIREBASE);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mRecords.clear();
-                for (DataSnapshot s : dataSnapshot.getChildren()) {
-                    mRecords.add(s.getValue(ThoughtRecord.class));
-                    mAdapter.addAll(mRecords);
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
     }
 }
