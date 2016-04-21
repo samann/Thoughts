@@ -1,6 +1,9 @@
 package droidowl.thoughts;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -108,7 +111,17 @@ public class ValuesActivity extends AppCompatActivity{
             mValues.clear();
             mAdapter.notifyDataSetChanged();
         }
+        if (id == R.id.action_set_alarm) {
+            handleNotification();
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void handleNotification() {
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
     }
 
     @Click(R.id.add_value_fab)
