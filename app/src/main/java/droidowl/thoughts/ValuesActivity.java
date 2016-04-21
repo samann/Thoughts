@@ -1,10 +1,12 @@
 package droidowl.thoughts;
 
 import android.content.DialogInterface;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -31,11 +33,8 @@ import java.util.List;
 @EActivity(R.layout.activity_add_values)
 public class ValuesActivity extends AppCompatActivity{
 
-    @ViewById(R.id.add_value_fab)
-    FloatingActionButton fab;
-
     @ViewById(R.id.values_list_view)
-    ListView listView;
+    ListView mListView;
 
     @App
     ThoughtsApplication mApplication;
@@ -48,7 +47,7 @@ public class ValuesActivity extends AppCompatActivity{
     void setup() {
         mValues = new ArrayList<>();
         mAdapter = new ValuesAdapter(this, R.layout.value_list_item, mValues);
-        listView.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
         Firebase valueBase = mApplication.mFirebase.child("value");
         valueBase.addChildEventListener(new ChildEventListener() {
             @Override
@@ -80,7 +79,7 @@ public class ValuesActivity extends AppCompatActivity{
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 ThoughtValue value = mAdapter.getItem(position);
@@ -91,6 +90,25 @@ public class ValuesActivity extends AppCompatActivity{
                 return true;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_value, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_clear_values) {
+            mApplication.mFirebase.child("value").removeValue();
+            mValues.clear();
+            mAdapter.notifyDataSetChanged();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Click(R.id.add_value_fab)

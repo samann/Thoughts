@@ -9,6 +9,15 @@ import java.util.List;
  * Created by droidowl on 2/29/16.
  */
 public class ThoughtRecord implements Parcelable {
+    public static final Creator<ThoughtRecord> CREATOR = new Creator<ThoughtRecord>() {
+        public ThoughtRecord createFromParcel(Parcel source) {
+            return new ThoughtRecord(source);
+        }
+
+        public ThoughtRecord[] newArray(int size) {
+            return new ThoughtRecord[size];
+        }
+    };
     String trigger;
     String beforeFeelings;
     String unhelpfulThoughts;
@@ -20,7 +29,6 @@ public class ThoughtRecord implements Parcelable {
     String date;
     String time;
     List<ThoughtError> thoughtErrors;
-
     double beforeRating;
     double afterRating;
 
@@ -47,6 +55,35 @@ public class ThoughtRecord implements Parcelable {
         this.outCome = outCome;
         this.beforeRating = beforeRating;
         this.afterRating = afterRating;
+    }
+
+    public ThoughtRecord(String trigger, String beforeFeelings, String unhelpfulThoughts, String supportingFacts, String opposingFacts, String newPerspective, String outCome, String key, String date, String time) {
+        this.trigger = trigger;
+        this.beforeFeelings = beforeFeelings;
+        this.unhelpfulThoughts = unhelpfulThoughts;
+        this.supportingFacts = supportingFacts;
+        this.opposingFacts = opposingFacts;
+        this.newPerspective = newPerspective;
+        this.outCome = outCome;
+        this.key = key;
+        this.date = date;
+        this.time = time;
+    }
+
+    protected ThoughtRecord(Parcel in) {
+        this.trigger = in.readString();
+        this.beforeFeelings = in.readString();
+        this.unhelpfulThoughts = in.readString();
+        this.supportingFacts = in.readString();
+        this.opposingFacts = in.readString();
+        this.newPerspective = in.readString();
+        this.outCome = in.readString();
+        this.key = in.readString();
+        this.date = in.readString();
+        this.time = in.readString();
+        this.thoughtErrors = in.createTypedArrayList(ThoughtError.CREATOR);
+        this.beforeRating = in.readDouble();
+        this.afterRating = in.readDouble();
     }
 
     public List<ThoughtError> getThoughtErrors() {
@@ -174,30 +211,4 @@ public class ThoughtRecord implements Parcelable {
         dest.writeDouble(this.beforeRating);
         dest.writeDouble(this.afterRating);
     }
-
-    protected ThoughtRecord(Parcel in) {
-        this.trigger = in.readString();
-        this.beforeFeelings = in.readString();
-        this.unhelpfulThoughts = in.readString();
-        this.supportingFacts = in.readString();
-        this.opposingFacts = in.readString();
-        this.newPerspective = in.readString();
-        this.outCome = in.readString();
-        this.key = in.readString();
-        this.date = in.readString();
-        this.time = in.readString();
-        this.thoughtErrors = in.createTypedArrayList(ThoughtError.CREATOR);
-        this.beforeRating = in.readDouble();
-        this.afterRating = in.readDouble();
-    }
-
-    public static final Creator<ThoughtRecord> CREATOR = new Creator<ThoughtRecord>() {
-        public ThoughtRecord createFromParcel(Parcel source) {
-            return new ThoughtRecord(source);
-        }
-
-        public ThoughtRecord[] newArray(int size) {
-            return new ThoughtRecord[size];
-        }
-    };
 }
