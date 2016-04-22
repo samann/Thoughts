@@ -42,7 +42,7 @@ public class ThoughtActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thought);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Firebase thoughtBaseRef = mApplication.mFirebase.child("thoughts");
+        Firebase thoughtBaseRef = mApplication.mFirebase.child(Utils.THOUGHT_RECORD_FIREBASE);
         mRecords = new ArrayList<>();
         mAdapter = new ThoughtAdapter(this, R.layout.thought_list_item,
                 mRecords);
@@ -94,7 +94,7 @@ public class ThoughtActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 ThoughtRecord record = mAdapter.getItem(position);
-                mApplication.mFirebase.child("thoughts").child(record.getKey
+                mApplication.mFirebase.child(Utils.THOUGHT_RECORD_FIREBASE).child(record.getKey
                         ()).removeValue();
                 mRecords.remove(position);
                 mAdapter.notifyDataSetChanged();

@@ -51,7 +51,7 @@ public class ValuesActivity extends AppCompatActivity{
         mValues = new ArrayList<>();
         mAdapter = new ValuesAdapter(this, R.layout.value_list_item, mValues);
         mListView.setAdapter(mAdapter);
-        Firebase valueBase = mApplication.mFirebase.child("value");
+        Firebase valueBase = mApplication.mFirebase.child(Utils.THOUGHT_VALUE_FIREBASE);
         valueBase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -86,7 +86,7 @@ public class ValuesActivity extends AppCompatActivity{
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 ThoughtValue value = mAdapter.getItem(position);
-                mApplication.mFirebase.child("value").child(value.getKey())
+                mApplication.mFirebase.child(Utils.THOUGHT_VALUE_FIREBASE).child(value.getKey())
                         .removeValue();
                 mValues.remove(value);
                 mAdapter.notifyDataSetChanged();
@@ -107,7 +107,7 @@ public class ValuesActivity extends AppCompatActivity{
         int id = item.getItemId();
 
         if (id == R.id.action_clear_values) {
-            mApplication.mFirebase.child("value").removeValue();
+            mApplication.mFirebase.child(Utils.THOUGHT_VALUE_FIREBASE).removeValue();
             mValues.clear();
             mAdapter.notifyDataSetChanged();
         }
@@ -132,16 +132,16 @@ public class ValuesActivity extends AppCompatActivity{
                     null);
             AlertDialog.Builder builder = new AlertDialog.Builder
                     (this);
-            builder.setTitle("Add A Value");
+            builder.setTitle(getString(R.string.add_value));
             builder.setView(v);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getString(R.string.ok_button), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     EditText titleText = (EditText) v.findViewById(R.id
                             .title_edittext);
                     EditText rankText = (EditText) v.findViewById(R.id
                             .rank_edittext);
-                    Firebase ref = mApplication.mFirebase.child("value")
+                    Firebase ref = mApplication.mFirebase.child(Utils.THOUGHT_VALUE_FIREBASE)
                             .push();
                     ThoughtValue value = new ThoughtValue(titleText.getText()
                             .toString(),
@@ -150,7 +150,7 @@ public class ValuesActivity extends AppCompatActivity{
                     ref.setValue(value);
                 }
             });
-            builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getString(R.string.cancel_button), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

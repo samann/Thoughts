@@ -10,6 +10,7 @@ public class Utils {
     public static final String THOUGHT_ERROR_EXTRAS = "extras_thought_errors";
     public static final String THOUGHT_RECORD_EXTRAS = "extras_thought_record";
     public static final String THOUGHT_RECORD_FIREBASE = "thoughts";
+    public static final String THOUGHT_VALUE_FIREBASE = "value";
     public static List<ThoughtError> createErrorList() {
         List<ThoughtError> list = new ArrayList<>();
         list.add(new ThoughtError("All-or-Nothing", "Thinking of things in " +

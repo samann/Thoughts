@@ -22,9 +22,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         if(dayOfWeek != 1 && dayOfWeek != 7) {
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)
-                            .setContentTitle("Take a look at your values")
+                            .setContentTitle(context.getString(R.string.notification_title))
                             .setSmallIcon(R.drawable.thought_cloud_jon_phill_02r)
-                            .setContentText("Tap to open values");
+                            .setContentText(context.getString(R.string.notification_text));
             Intent resultIntent = new Intent(context, ValuesActivity_.class);
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addParentStack(ValuesActivity_.class);

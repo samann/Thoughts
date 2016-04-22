@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Thoughts</string>
     <string name="action_clear">Clear Thoughts</string>
+    <string name="add_value">Add A Value</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">CANCEL</string>
+    <string name="notification_title">Take a look at your values</string>
+    <string name="notification_text">Tap to open values</string>
+    <string name="firebase_root">https://droidowlthoughts.firebaseio.com</string>
 </resources>

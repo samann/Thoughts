@@ -48,7 +48,7 @@ public class CreateThoughtActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_thought);
         selectedErrors = new ArrayList<>();
         if (getIntent().getExtras() != null) {
-            mRecord = getIntent().getExtras().getParcelable("record");
+            mRecord = getIntent().getExtras().getParcelable(Utils.THOUGHT_RECORD_EXTRAS);
             if (mRecord != null) {
                 trigger.setText(mRecord.getTrigger());
                 feelings.setText(mRecord.getBeforeFeelings());
@@ -110,7 +110,7 @@ public class CreateThoughtActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && data != null) {
             Bundle extras = data.getExtras();
-            selectedErrors = extras.getParcelableArrayList("selected");
+            selectedErrors = extras.getParcelableArrayList(Utils.THOUGHT_ERROR_EXTRAS);
             if (selectedErrors != null) {
                 for (ThoughtError selectedError : selectedErrors) {
                     Log.e("tag", selectedError.getTitle());

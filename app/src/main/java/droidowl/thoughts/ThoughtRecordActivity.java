@@ -73,7 +73,7 @@ public class ThoughtRecordActivity extends AppCompatActivity {
         if (record != null) {
             Intent intent = new Intent(this, CreateThoughtActivity_.class);
             Bundle bundle = new Bundle();
-            bundle.putParcelable("record", record);
+            bundle.putParcelable(Utils.THOUGHT_RECORD_EXTRAS, record);
             intent.putExtras(bundle);
             startActivity(intent);
         }

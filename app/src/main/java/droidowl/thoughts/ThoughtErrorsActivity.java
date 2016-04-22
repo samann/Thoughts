@@ -61,7 +61,7 @@ public class ThoughtErrorsActivity extends AppCompatActivity {
     void doneWasTapped() {
         Intent intent = new Intent(this, ThoughtErrorsActivity_.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("selected", selected);
+        bundle.putParcelableArrayList(Utils.THOUGHT_ERROR_EXTRAS, selected);
         intent.putExtras(bundle);
         setResult(1, intent);
         finish();
