@@ -7,4 +7,10 @@
     <string name="notification_title">Take a look at your values</string>
     <string name="notification_text">Tap to open values</string>
     <string name="firebase_root">https://droidowlthoughts.firebaseio.com</string>
+    <string name="notification_setting_summary">Turn on for notifications</string>
+    <string name="notification_setting_title">Enable Notifications</string>
+    <string name="pref_category_notifications">Notifications</string>
+    <string name="pref_notification_key">prefEnableNotification</string>
+    <string name="action_value">Values</string>
+    <string name="action_settings">Settings</string>
 </resources>

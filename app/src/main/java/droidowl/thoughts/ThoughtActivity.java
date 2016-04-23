@@ -131,6 +131,11 @@ public class ThoughtActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, ThoughtsSettingsActivity_.class);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

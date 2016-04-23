@@ -36,6 +36,8 @@ import java.util.List;
 @EActivity(R.layout.activity_add_values)
 public class ValuesActivity extends AppCompatActivity{
 
+
+
     @ViewById(R.id.values_list_view)
     ListView mListView;
 
