@@ -124,11 +124,13 @@ public class ValuesActivity extends AppCompatActivity{
 
     private void handleNotification() {
         if (mPrefs.notificationsEnabled().get()) {
-            Toast.makeText(ValuesActivity.this, "Notifications are enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ValuesActivity.this, R.string.notifications_enabled, Toast.LENGTH_SHORT).show();
             Intent alarmIntent = new Intent(this, AlarmReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
+        } else {
+            Toast.makeText(ValuesActivity.this, R.string.notifications_disabled, Toast.LENGTH_SHORT).show();
         }
     }
 
