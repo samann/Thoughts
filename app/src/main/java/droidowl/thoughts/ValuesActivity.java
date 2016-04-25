@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -25,6 +26,7 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +37,9 @@ import java.util.List;
  */
 @EActivity(R.layout.activity_add_values)
 public class ValuesActivity extends AppCompatActivity{
+
+    @Pref
+    ThoughtsPreferences_ mPrefs;
 
     @ViewById(R.id.values_list_view)
     ListView mListView;
@@ -118,10 +123,15 @@ public class ValuesActivity extends AppCompatActivity{
     }
 
     private void handleNotification() {
-        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
+        if (mPrefs.notificationsEnabled().get()) {
+            Toast.makeText(ValuesActivity.this, R.string.notifications_enabled, Toast.LENGTH_SHORT).show();
+            Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
+        } else {
+            Toast.makeText(ValuesActivity.this, R.string.notifications_disabled, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Click(R.id.add_value_fab)
