@@ -1,9 +1,11 @@
 package droidowl.thoughts;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -125,10 +128,34 @@ public class ValuesActivity extends AppCompatActivity{
     private void handleNotification() {
         if (mPrefs.notificationsEnabled().get()) {
             Toast.makeText(ValuesActivity.this, R.string.notifications_enabled, Toast.LENGTH_SHORT).show();
-            Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
+            LayoutInflater inflater = (this).getLayoutInflater();
+            final View v = inflater.inflate(R.layout
+                    .notification_time_picker_view, null);
+            Intent alarmIntent = new Intent(ValuesActivity.this,
+                    AlarmReceiver
+                    .class);
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast
+                    (ValuesActivity.this, 0, alarmIntent, PendingIntent
+                            .FLAG_UPDATE_CURRENT);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getString(R.string.time_title));
+            builder.setView(v);
+            builder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.M)
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    TimePicker picker = (TimePicker) v.findViewById(R.id
+                            .timePicker);
+                    int hour = picker.getHour() * 3600000;
+                    int minute = picker.getMinute() * 60000;
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                            hour + minute, 1000 * 60 * 60 * 24,
+                            pendingIntent);
+                }
+            });
+            builder.create();
+            builder.show();
         } else {
             Toast.makeText(ValuesActivity.this, R.string.notifications_disabled, Toast.LENGTH_SHORT).show();
         }

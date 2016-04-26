@@ -15,4 +15,9 @@
     <string name="action_settings">Settings</string>
     <string name="notifications_enabled">Notifications are enabled</string>
     <string name="notifications_disabled">Notifications are disabled</string>
+    <string name="time_title">Choose a Time</string>
+    <string name="hour_title">Daily Notification Time</string>
+    <string name="hour_summary">Set the time to receive a daily
+        notification</string>
+    <string name="pref_time_key">prefNotificationTime</string>
 </resources>

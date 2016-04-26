@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="default_enable_notification">false</bool>
+    <integer name="default_hour">8</integer>
+    <integer name="default_minute">0</integer>
 </resources>

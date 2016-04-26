@@ -5,5 +5,10 @@
                 android:title="@string/notification_setting_title"
                 android:summary="@string/notification_setting_summary"
                 android:key="@string/pref_notification_key"/>
+            <EditTextPreference
+                android:title="@string/hour_title"
+                android:summary="@string/hour_summary"
+                android:key="@string/pref_time_key"
+                android:inputType="time"/>
         </PreferenceCategory>
 </PreferenceScreen>
