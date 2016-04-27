@@ -28,9 +28,11 @@
         </activity>
         <activity android:name=".ThoughtErrorsActivity_">
         </activity>
-        <activity android:name=".ValuesActivity_">
+        <activity android:name=".ValuesActivity_"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".ThoughtsSettingsActivity_"/>
+        <activity android:name=".ThoughtsSettingsActivity_"
+                  android:theme="@style/AppTheme.NoActionBar"/>
         <receiver android:name=".AlarmReceiver"
             android:process=":remote"/>
     </application>

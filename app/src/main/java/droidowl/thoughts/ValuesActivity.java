@@ -3,6 +3,7 @@ package droidowl.thoughts;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -38,9 +39,8 @@ import java.util.List;
 /**
  * Created by droidowl on 4/11/16.
  */
-@EActivity(R.layout.activity_add_values)
+@EActivity(R.layout.activity_values)
 public class ValuesActivity extends AppCompatActivity{
-
     @Pref
     ThoughtsPreferences_ mPrefs;
 
@@ -101,41 +101,21 @@ public class ValuesActivity extends AppCompatActivity{
                 return true;
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_value, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_clear_values) {
-            mApplication.mFirebase.child(Utils.THOUGHT_VALUE_FIREBASE).removeValue();
-            mValues.clear();
-            mAdapter.notifyDataSetChanged();
-        }
-        if (id == R.id.action_set_alarm) {
-            handleNotification();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void handleNotification() {
         if (mPrefs.notificationsEnabled().get()) {
-            Toast.makeText(ValuesActivity.this, R.string.notifications_enabled, Toast.LENGTH_SHORT).show();
-            LayoutInflater inflater = (this).getLayoutInflater();
+            Toast.makeText(this, R.string.notifications_enabled, Toast
+                    .LENGTH_SHORT).show();
+            LayoutInflater inflater = getLayoutInflater();
             final View v = inflater.inflate(R.layout
                     .notification_time_picker_view, null);
-            Intent alarmIntent = new Intent(ValuesActivity.this,
+            Intent alarmIntent = new Intent(this,
                     AlarmReceiver
-                    .class);
+                            .class);
             final PendingIntent pendingIntent = PendingIntent.getBroadcast
-                    (ValuesActivity.this, 0, alarmIntent, PendingIntent
+                    (this, 0, alarmIntent, PendingIntent
                             .FLAG_UPDATE_CURRENT);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.time_title));
@@ -148,7 +128,8 @@ public class ValuesActivity extends AppCompatActivity{
                             .timePicker);
                     int hour = picker.getHour() * 3600000;
                     int minute = picker.getMinute() * 60000;
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    AlarmManager alarmManager = (AlarmManager)
+                            getSystemService(Context.ALARM_SERVICE);
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                             hour + minute, 1000 * 60 * 60 * 24,
                             pendingIntent);
@@ -157,14 +138,15 @@ public class ValuesActivity extends AppCompatActivity{
             builder.create();
             builder.show();
         } else {
-            Toast.makeText(ValuesActivity.this, R.string.notifications_disabled, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.notifications_disabled, Toast
+                    .LENGTH_SHORT).show();
         }
     }
 
     @Click(R.id.add_value_fab)
     void addWasTapped() {
         if (mValues != null) {
-            LayoutInflater inflater = (this).getLayoutInflater();
+            LayoutInflater inflater = this.getLayoutInflater();
             final View v = inflater.inflate(R.layout.activity_create_value,
                     null);
             AlertDialog.Builder builder = new AlertDialog.Builder
@@ -183,18 +165,33 @@ public class ValuesActivity extends AppCompatActivity{
                     ThoughtValue value = new ThoughtValue(titleText.getText()
                             .toString(),
                             Integer.parseInt(rankText.getText().toString()), ref
-                    .getKey());
+                            .getKey());
                     ref.setValue(value);
                 }
             });
             builder.setNegativeButton(getString(R.string.cancel_button), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
             builder.create();
             builder.show();
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_value, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

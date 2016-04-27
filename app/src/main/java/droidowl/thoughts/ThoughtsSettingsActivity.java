@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterPreferences;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.PreferenceByKey;
 import org.androidannotations.annotations.PreferenceChange;
@@ -31,9 +32,15 @@ public class ThoughtsSettingsActivity extends PreferenceActivity {
     EditTextPreference notificationTime;
 
     @AfterPreferences
-    void setup() {
+    void initPrefs() {
         notificationPref.setChecked(mPrefs.notificationsEnabled().getOr
                 (false));
+    }
+
+    @AfterViews
+    void setup() {
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setActionBar(toolbar);
     }
 
     @PreferenceChange(R.string.pref_notification_key)

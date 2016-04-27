@@ -1,10 +1,12 @@
 package droidowl.thoughts;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +17,14 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -24,7 +33,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
-@EActivity
+@EActivity(R.layout.activity_thought)
 public class ThoughtActivity extends AppCompatActivity {
 
     @ViewById(R.id.add_thought_fab)
@@ -33,19 +42,24 @@ public class ThoughtActivity extends AppCompatActivity {
     ListView mListView;
     @App
     ThoughtsApplication mApplication;
+
+    Fragment mValuesActivityFragment;
+
+    Fragment mThoughtActivityFragment;
+
     ThoughtAdapter mAdapter;
     List<ThoughtRecord> mRecords;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thought);
+    @AfterViews
+    void setup() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Firebase thoughtBaseRef = mApplication.mFirebase.child(Utils.THOUGHT_RECORD_FIREBASE);
         mRecords = new ArrayList<>();
         mAdapter = new ThoughtAdapter(this, R.layout.thought_list_item,
                 mRecords);
+        mValuesActivityFragment = new ValuesActivityFragment_();
+        mThoughtActivityFragment = new ThoughtActivityFragment_();
         thoughtBaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -80,7 +94,7 @@ public class ThoughtActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),
+                Intent intent = new Intent(ThoughtActivity.this,
                         ThoughtRecordActivity_.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Utils.THOUGHT_RECORD_EXTRAS,
@@ -101,8 +115,53 @@ public class ThoughtActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        } catch (NullPointerException e) {
+            Log.e("NULL", "actionbar is null");
+        }
+        //if you want to update the items at a later time it is recommended to keep it in a variable
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName(R.string.app_name);
+        SecondaryDrawerItem item2 = new SecondaryDrawerItem();
+        item2.withName(R.string.action_value);
+//create the drawer and remember the `Drawer` result object
+        Drawer result = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .addDrawerItems(
+                        item1,
+                        new DividerDrawerItem(),
+                        item2,
+                        new SecondaryDrawerItem().withName(R.string.action_settings)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        // do something with the clicked item :D
+                        switch (position) {
+                            case 0:
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                Intent intent = new Intent(ThoughtActivity
+                                        .this,
+                                        ValuesActivity_.class);
+                                startActivity(intent);
+                                break;
+                            case 3:
+                                Intent intent1 = new Intent(ThoughtActivity
+                                        .this, ThoughtsSettingsActivity_
+                                        .class);
+                                startActivity(intent1);
+                        }
+                        return true;
+                    }
+                })
+                .build();
+        result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
