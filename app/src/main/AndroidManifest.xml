@@ -14,7 +14,8 @@
         <activity
             android:name=".ThoughtActivity_"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -27,9 +28,11 @@
         </activity>
         <activity android:name=".ThoughtErrorsActivity_">
         </activity>
-        <activity android:name=".ValuesActivity_">
+        <activity android:name=".ValuesActivity_"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".ThoughtsSettingsActivity_"/>
+        <activity android:name=".ThoughtsSettingsActivity_"
+                  android:theme="@style/AppTheme.NoActionBar"/>
         <receiver android:name=".AlarmReceiver"
             android:process=":remote"/>
     </application>

@@ -11,4 +11,10 @@ public interface ThoughtsPreferences {
 
    @DefaultRes(R.bool.default_enable_notification)
    boolean notificationsEnabled();
+
+   @DefaultRes(R.integer.default_hour)
+   int notificationHour();
+
+   @DefaultRes(R.integer.default_minute)
+   int notificationMinute();
 }
