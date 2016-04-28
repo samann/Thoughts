@@ -2,7 +2,6 @@ package droidowl.thoughts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
 
@@ -18,7 +17,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @EActivity
-public class CreateThoughtActivity extends AppCompatActivity {
+public class CreateThoughtActivity extends BaseActivity {
 
     @App
     ThoughtsApplication mApplication;

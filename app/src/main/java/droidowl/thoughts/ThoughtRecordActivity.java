@@ -2,7 +2,6 @@ package droidowl.thoughts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -11,7 +10,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity
-public class ThoughtRecordActivity extends AppCompatActivity {
+public class ThoughtRecordActivity extends BaseActivity {
 
     @ViewById(R.id.trigger_text_view)
     TextView trigger;
