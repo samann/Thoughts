@@ -11,6 +11,9 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -61,6 +64,7 @@ public class ValuesActivityFragment extends Fragment {
     void setup() {
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle("Values");
+        setHasOptionsMenu(true);
         mValues = new ArrayList<>();
         mAdapter = new ValuesAdapter(getActivity(), R.layout.value_list_item, mValues);
         mListView.setAdapter(mAdapter);
@@ -108,44 +112,60 @@ public class ValuesActivityFragment extends Fragment {
         });
     }
 
-    private void handleNotification() {
-        if (mPrefs.notificationsEnabled().get()) {
-            Toast.makeText(getActivity(), R.string.notifications_enabled, Toast
-                    .LENGTH_SHORT).show();
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            final View v = inflater.inflate(R.layout
-                    .notification_time_picker_view, null);
-            Intent alarmIntent = new Intent(getActivity(),
-                    AlarmReceiver
-                            .class);
-            final PendingIntent pendingIntent = PendingIntent.getBroadcast
-                    (getActivity(), 0, alarmIntent, PendingIntent
-                            .FLAG_UPDATE_CURRENT);
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(getString(R.string.time_title));
-            builder.setView(v);
-            builder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
-                @TargetApi(Build.VERSION_CODES.M)
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    TimePicker picker = (TimePicker) v.findViewById(R.id
-                            .timePicker);
-                    int hour = picker.getHour() * 3600000;
-                    int minute = picker.getMinute() * 60000;
-                    AlarmManager alarmManager = (AlarmManager)
-                            getActivity().getSystemService(Context
-                                    .ALARM_SERVICE);
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                            hour + minute, 1000 * 60 * 60 * 24,
-                            pendingIntent);
-                }
-            });
-            builder.create();
-            builder.show();
-        } else {
-            Toast.makeText(getActivity(), R.string.notifications_disabled, Toast
-                    .LENGTH_SHORT).show();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_value, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_set_alarm) {
+            if (mPrefs.notificationsEnabled().get()) {
+                handleNotification();
+            } else {
+                Toast.makeText(getActivity(),
+                        R.string.notifications_not_enabled,
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
+        return true;
+    }
+
+    private void handleNotification() {
+        Toast.makeText(getActivity(), R.string.notifications_enabled, Toast
+                .LENGTH_SHORT).show();
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View v = inflater.inflate(R.layout
+                .notification_time_picker_view, null);
+        Intent alarmIntent = new Intent(getActivity(),
+                AlarmReceiver
+                        .class);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast
+                (getActivity(), 0, alarmIntent, PendingIntent
+                        .FLAG_UPDATE_CURRENT);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(getString(R.string.time_title));
+        builder.setView(v);
+        builder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.M)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                TimePicker picker = (TimePicker) v.findViewById(R.id
+                        .timePicker);
+                int hour = picker.getHour() * 3600000;
+                int minute = picker.getMinute() * 60000;
+                AlarmManager alarmManager = (AlarmManager)
+                        getActivity().getSystemService(Context
+                                .ALARM_SERVICE);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                        hour + minute, 1000 * 60 * 60 * 24,
+                        pendingIntent);
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
     @Click(R.id.add_value_fab)

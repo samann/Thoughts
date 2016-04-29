@@ -25,9 +25,9 @@ public class AlarmReceiver extends BroadcastReceiver {
                             .setContentTitle(context.getString(R.string.notification_title))
                             .setSmallIcon(R.drawable.thought_cloud_jon_phill_02r)
                             .setContentText(context.getString(R.string.notification_text));
-            Intent resultIntent = new Intent(context, ValuesActivity_.class);
+            Intent resultIntent = new Intent(context, ThoughtActivity_.class);
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-            stackBuilder.addParentStack(ValuesActivity_.class);
+            stackBuilder.addParentStack(ThoughtActivity_.class);
             stackBuilder.addNextIntent(resultIntent);
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(resultPendingIntent);
