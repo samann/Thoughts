@@ -45,11 +45,9 @@ public class ThoughtActivity extends BaseActivity {
         } catch (NullPointerException e) {
             Log.e("NULL", "actionbar is null");
         }
-        //if you want to update the items at a later time it is recommended to keep it in a variable
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName(R.string.app_name);
         SecondaryDrawerItem item2 = new SecondaryDrawerItem();
         item2.withName(R.string.action_value);
-//create the drawer and remember the `Drawer` result object
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -66,7 +64,6 @@ public class ThoughtActivity extends BaseActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
                         switch (position) {
                             case 1:
                                 if (!mThoughtActivityFragment.isAdded()) {
@@ -113,6 +110,5 @@ public class ThoughtActivity extends BaseActivity {
                 .build();
         result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
         result.setSelection(item1);
-
     }
 }

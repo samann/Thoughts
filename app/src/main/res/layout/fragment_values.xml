@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:showIn="@layout/activity_values"
     tools:context=".ValuesActivityFragment"
     android:weightSum="1">
 
