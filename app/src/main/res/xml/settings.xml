@@ -11,4 +11,15 @@
                 android:key="@string/pref_time_key"
                 android:inputType="time"/>
         </PreferenceCategory>
+        <PreferenceCategory
+            android:title="@string/pref_category_clear_records">
+            <Preference android:title="@string/pref_clear_records_title"
+                        android:summary="@string/pref_clear_records_summary"
+                        android:key="@string/pref_clear_records_key"/>
+        </PreferenceCategory>
+        <PreferenceCategory android:title="@string/pref_category_values">
+            <Preference android:title="@string/pre_clear_values_title"
+                        android:summary="@string/pref_clear_values_summary"
+                        android:key="@string/pref_clear_values_key"/>
+        </PreferenceCategory>
 </PreferenceScreen>

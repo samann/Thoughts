@@ -20,5 +20,17 @@
     <string name="hour_summary">Set the time to receive a daily
         notification</string>
     <string name="pref_time_key">prefNotificationTime</string>
-    <string name="notifications_not_enabled">Notifications are not enabled, please go to settings</string>
+    <string name="notifications_not_enabled">Notifications are not enabled,
+        please go to settings</string>
+    <string name="pref_clear_records_key">prefClearRecordsKey</string>
+    <string name="pref_clear_records_summary">Select to remove all records</string>
+    <string name="pref_clear_records_title">Clear Records</string>
+    <string name="pref_category_clear_records">Thought Records</string>
+    <string name="pref_clear_values_key">prefClearValuesKey</string>
+    <string name="pref_clear_values_summary">Select to remove all
+        values</string>
+    <string name="pre_clear_values_title">Clear Values</string>
+    <string name="pref_category_values">Values</string>
+    <string name="yes_button">YES</string>
+    <string name="confirm_remove">Are you sure?</string>
 </resources>

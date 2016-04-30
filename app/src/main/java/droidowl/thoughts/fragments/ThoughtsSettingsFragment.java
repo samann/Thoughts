@@ -1,18 +1,23 @@
 package droidowl.thoughts;
 
+import android.content.DialogInterface;
 import android.preference.CheckBoxPreference;
+import android.preference.DialogPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterPreferences;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.PreferenceByKey;
 import org.androidannotations.annotations.PreferenceChange;
+import org.androidannotations.annotations.PreferenceClick;
 import org.androidannotations.annotations.PreferenceScreen;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
@@ -31,6 +36,9 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
 
     @PreferenceByKey(R.string.pref_time_key)
     EditTextPreference notificationTime;
+
+    @App
+    ThoughtsApplication mApplication;
 
     @AfterPreferences
     void initPrefs() {
@@ -72,6 +80,50 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
             Log.e("Time error", newValue);
             notificationTime.setText("8:00");
         }
+    }
+
+    @PreferenceClick(R.string.pref_clear_records_key)
+    void clearRecordsClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(mApplication.getString(R.string.confirm_remove));
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.yes_button, new DialogInterface
+                .OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mApplication.mFirebase.child("thoughts").removeValue();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create();
+        builder.show();
+    }
+
+    @PreferenceClick(R.string.pref_clear_values_key)
+    void clearValuesClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(mApplication.getString(R.string.confirm_remove));
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.yes_button, new DialogInterface
+                .OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mApplication.mFirebase.child("values").removeValue();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
     private void checkTime(int hour, int min) {
