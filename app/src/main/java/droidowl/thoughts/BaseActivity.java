@@ -12,7 +12,7 @@ import org.androidannotations.annotations.EActivity;
  */
 @EActivity
 public class BaseActivity extends AppCompatActivity {
-    Drawer result;
+    public Drawer result;
     
     @AfterViews
     void setup() {

@@ -16,14 +16,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
-import droidowl.thoughts.BaseActivity;
-import droidowl.thoughts.R;
-import droidowl.thoughts.ThoughtActivityFragment_;
-import droidowl.thoughts.ValuesActivityFragment_;
-import droidowl.thoughts.ThoughtsSettingsFragment_;
-
 @EActivity(R.layout.activity_thought)
 public class ThoughtActivity extends BaseActivity {
+
 
 
 
