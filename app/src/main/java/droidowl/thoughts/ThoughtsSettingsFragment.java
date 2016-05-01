@@ -1,14 +1,20 @@
 package droidowl.thoughts;
 
+import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.preference.CheckBoxPreference;
-import android.preference.DialogPreference;
-import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterPreferences;
@@ -34,9 +40,6 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
     @PreferenceByKey(R.string.pref_notification_key)
     CheckBoxPreference notificationPref;
 
-    @PreferenceByKey(R.string.pref_time_key)
-    EditTextPreference notificationTime;
-
     @App
     ThoughtsApplication mApplication;
 
@@ -59,27 +62,57 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
                 .LENGTH_SHORT).show();
     }
 
-    @PreferenceChange(R.string.pref_time_key)
-    void notificationTimePrefChanged(String newValue, Preference preference) {
-        try {
-            String[] parts = newValue.split(":");
-            int hour = Integer.parseInt(parts[0]);
-            int min = Integer.parseInt(parts[1]);
-            checkTime(hour, min);
-        }catch (Exception e) {
-            if (newValue.length() == 4) {
-                try {
-                    int hour = Integer.parseInt(newValue.substring(0,2));
-                    int min = Integer.parseInt(newValue.substring(2));
-                    checkTime(hour, min);
-                } catch (Exception f) {
-                    Log.e("Time error", newValue);
-                    notificationTime.setText("8:00");
-                }
+    @PreferenceClick(R.string.pref_time_key)
+    void notificationTimePrefChanged() {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View v = inflater.inflate(R.layout
+                .notification_time_picker_view, null);
+        Intent alarmIntent = new Intent(getActivity(),
+                AlarmReceiver
+                        .class);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast
+                (getActivity(), 0, alarmIntent, PendingIntent
+                        .FLAG_UPDATE_CURRENT);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(getString(R.string.time_title));
+        builder.setView(v);
+        builder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.M)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                TimePicker picker = (TimePicker) v.findViewById(R.id
+                        .timePicker);
+                int hour = picker.getHour() * 3600000;
+                int minute = picker.getMinute() * 60000;
+                AlarmManager alarmManager = (AlarmManager)
+                        getActivity().getSystemService(Context
+                                .ALARM_SERVICE);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                        hour + minute, 1000 * 60 * 60 * 24,
+                        pendingIntent);
             }
-            Log.e("Time error", newValue);
-            notificationTime.setText("8:00");
-        }
+        });
+        builder.create();
+        builder.show();
+//        try {
+//            String[] parts = newValue.split(":");
+//            int hour = Integer.parseInt(parts[0]);
+//            int min = Integer.parseInt(parts[1]);
+//            checkTime(hour, min);
+//        }catch (Exception e) {
+//            if (newValue.length() == 4) {
+//                try {
+//                    int hour = Integer.parseInt(newValue.substring(0,2));
+//                    int min = Integer.parseInt(newValue.substring(2));
+//                    checkTime(hour, min);
+//                } catch (Exception f) {
+//                    Log.e("Time error", newValue);
+//                    notificationTime.setText("8:00");
+//                }
+//            }
+//            Log.e("Time error", newValue);
+//            notificationTime.setText("8:00");
+//        }
     }
 
     @PreferenceClick(R.string.pref_clear_records_key)
