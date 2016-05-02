@@ -34,6 +34,9 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 @EFragment
 public class ThoughtsSettingsFragment extends PreferenceFragment {
 
+    private static final int MILLI_HOURS = 3600000;
+    private static final int MILLI_MINUTES = 60000;
+    private static final int INTERVAL_MILLIS = 1000 * 60 * 60 * 24;
     @Pref
     ThoughtsPreferences_ mPrefs;
 
@@ -42,6 +45,8 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
 
     @App
     ThoughtsApplication mApplication;
+
+
 
     @AfterPreferences
     void initPrefs() {
@@ -82,37 +87,39 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
             public void onClick(DialogInterface dialog, int which) {
                 TimePicker picker = (TimePicker) v.findViewById(R.id
                         .timePicker);
-                int hour = picker.getHour() * 3600000;
-                int minute = picker.getMinute() * 60000;
-                AlarmManager alarmManager = (AlarmManager)
-                        getActivity().getSystemService(Context
-                                .ALARM_SERVICE);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                        hour + minute, 1000 * 60 * 60 * 24,
-                        pendingIntent);
+                int hour = picker.getHour();
+                int minute = picker.getMinute();
+                if (Utils.checkTime(hour, minute)) {
+                    hour *= 3600000;
+                    minute *= 60000;
+                    mPrefs.notificationHour().put(hour);
+                    mPrefs.notificationMinute().put(minute);
+                    Toast.makeText(getActivity(), "Notification time " +
+                            "updated: " + String.valueOf(hour / MILLI_HOURS) +
+                            ":" +
+                            String.valueOf(minute / MILLI_MINUTES), Toast
+                            .LENGTH_SHORT).show();
+                }
+                if (mPrefs.notificationsEnabled().get()) {
+                    AlarmManager alarmManager = (AlarmManager)
+                            getActivity().getSystemService(Context
+                                    .ALARM_SERVICE);
+
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                            mPrefs.notificationHour().getOr(0)+
+                                    mPrefs.notificationMinute()
+                                    .getOr(0), INTERVAL_MILLIS,
+                            pendingIntent);
+                } else {
+                    Toast.makeText(getActivity(), "Please Enable Notifications"
+                            , Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         builder.create();
         builder.show();
-//        try {
-//            String[] parts = newValue.split(":");
-//            int hour = Integer.parseInt(parts[0]);
-//            int min = Integer.parseInt(parts[1]);
-//            checkTime(hour, min);
-//        }catch (Exception e) {
-//            if (newValue.length() == 4) {
-//                try {
-//                    int hour = Integer.parseInt(newValue.substring(0,2));
-//                    int min = Integer.parseInt(newValue.substring(2));
-//                    checkTime(hour, min);
-//                } catch (Exception f) {
-//                    Log.e("Time error", newValue);
-//                    notificationTime.setText("8:00");
-//                }
-//            }
-//            Log.e("Time error", newValue);
-//            notificationTime.setText("8:00");
-//        }
+
     }
 
     @PreferenceClick(R.string.pref_clear_records_key)
@@ -157,16 +164,5 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
         });
         builder.create();
         builder.show();
-    }
-
-    private void checkTime(int hour, int min) {
-        if (!(hour < 0 || hour > 24) && !(min < 0 || min >= 60)) {
-            mPrefs.notificationHour().put(hour);
-            mPrefs.notificationMinute().put(min);
-            Toast.makeText(getActivity(), String.valueOf(hour) + ":" +  String.valueOf
-                    (min),
-                    Toast
-                    .LENGTH_SHORT).show();
-        }
     }
 }

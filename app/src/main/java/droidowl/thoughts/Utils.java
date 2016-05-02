@@ -43,4 +43,11 @@ public class Utils {
                 false));
         return list;
     }
+
+    protected static boolean checkTime(int hour, int min) {
+        if (!(hour < 0 || hour > 24) && !(min < 0 || min >= 60)) {
+            return  true;
+        }
+        return false;
+    }
 }
