@@ -30,7 +30,7 @@
         </activity>
         <activity android:name=".ThoughtErrorsActivity_">
         </activity>
-        <receiver android:name=".AlarmReceiver"
+        <receiver android:name=".AlarmReceiver_"
             android:process=":remote"/>
     </application>
 
