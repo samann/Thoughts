@@ -34,9 +34,6 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 @EFragment
 public class ThoughtsSettingsFragment extends PreferenceFragment {
 
-    private static final int MILLI_HOURS = 3600000;
-    private static final int MILLI_MINUTES = 60000;
-    private static final int INTERVAL_MILLIS = 1000 * 60 * 60 * 24;
     @Pref
     ThoughtsPreferences_ mPrefs;
 
@@ -90,14 +87,15 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
                 int hour = picker.getHour();
                 int minute = picker.getMinute();
                 if (Utils.checkTime(hour, minute)) {
-                    hour *= 3600000;
-                    minute *= 60000;
+                    hour *= Utils.MILLI_IN_HOUR;
+                    minute *= Utils.MILLI_IN_MINUTE;
                     mPrefs.notificationHour().put(hour);
                     mPrefs.notificationMinute().put(minute);
                     Toast.makeText(getActivity(), "Notification time " +
-                            "updated: " + String.valueOf(hour / MILLI_HOURS) +
+                            "updated: " + String.valueOf(hour / Utils.MILLI_IN_HOUR) +
                             ":" +
-                            String.valueOf(minute / MILLI_MINUTES), Toast
+                            String.valueOf(minute / Utils.MILLI_IN_MINUTE),
+                            Toast
                             .LENGTH_SHORT).show();
                 }
                 if (mPrefs.notificationsEnabled().get()) {
@@ -108,7 +106,7 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                             mPrefs.notificationHour().getOr(0)+
                                     mPrefs.notificationMinute()
-                                    .getOr(0), INTERVAL_MILLIS,
+                                    .getOr(0), Utils.MILLI_IN_DAY,
                             pendingIntent);
                 } else {
                     Toast.makeText(getActivity(), "Please Enable Notifications"

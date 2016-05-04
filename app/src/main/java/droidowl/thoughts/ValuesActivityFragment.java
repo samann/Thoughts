@@ -154,14 +154,21 @@ public class ValuesActivityFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 TimePicker picker = (TimePicker) v.findViewById(R.id
                         .timePicker);
-                int hour = picker.getHour() * 3600000;
-                int minute = picker.getMinute() * 60000;
-                AlarmManager alarmManager = (AlarmManager)
-                        getActivity().getSystemService(Context
-                                .ALARM_SERVICE);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                        hour + minute, 1000 * 60 * 60 * 24,
-                        pendingIntent);
+                int hour = picker.getHour();
+                int minute = picker.getMinute();
+                hour *= Utils.MILLI_IN_HOUR;
+                minute *= Utils.MILLI_IN_MINUTE;
+                if (Utils.checkTime(hour, minute)) {
+                    mPrefs.notificationHour().put(hour);
+                    mPrefs.notificationMinute().put(minute);
+                    AlarmManager alarmManager = (AlarmManager)
+                            getActivity().getSystemService(Context
+                                    .ALARM_SERVICE);
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                            hour + minute, Utils.MILLI_IN_DAY,
+                            pendingIntent);
+                }
+
             }
         });
         builder.create();

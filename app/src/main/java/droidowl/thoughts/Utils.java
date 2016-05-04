@@ -11,6 +11,10 @@ public class Utils {
     public static final String THOUGHT_RECORD_EXTRAS = "extras_thought_record";
     public static final String THOUGHT_RECORD_FIREBASE = "thoughts";
     public static final String THOUGHT_VALUE_FIREBASE = "value";
+    public static final int MILLI_IN_HOUR = 36000000;
+    public static final int MILLI_IN_MINUTE = 60000;
+    public static final int MILLI_IN_DAY = 1000 * 60 * 60 * 24;
+
     public static List<ThoughtError> createErrorList() {
         List<ThoughtError> list = new ArrayList<>();
         list.add(new ThoughtError("All-or-Nothing", "Thinking of things in " +
