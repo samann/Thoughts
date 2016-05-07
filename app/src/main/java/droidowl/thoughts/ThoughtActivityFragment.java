@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,6 +29,7 @@ import java.util.List;
 @EFragment(R.layout.fragment_thought)
 public class ThoughtActivityFragment extends Fragment {
 
+    private static final String TAG = ThoughtActivity.class.getSimpleName();
     @ViewById(R.id.thoughts_list_view)
     ListView mListView;
     @App
@@ -49,12 +51,18 @@ public class ThoughtActivityFragment extends Fragment {
         mAdapter = new ThoughtAdapter(getActivity(), R.layout.thought_list_item,
                 mRecords);
 
+        mListView.setAdapter(mAdapter);
+
         thoughtBaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ThoughtRecord record = dataSnapshot.getValue(ThoughtRecord
                         .class);
-                mAdapter.add(record);
+                if (mRecords.indexOf(record) < 0) {
+                    mRecords.add(record);
+                    Log.e(TAG, "this should be printed once per item + \n" +
+                            "record: " + record.getTrigger());
+                }
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -78,7 +86,6 @@ public class ThoughtActivityFragment extends Fragment {
             }
         });
 
-        mListView.setAdapter(mAdapter);
 
         listenForItemClick();
 

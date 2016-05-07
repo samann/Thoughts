@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,14 +42,31 @@ public class ThoughtAdapter extends ArrayAdapter<ThoughtRecord> {
             holder.timeTextView = (TextView)row.findViewById(R.id
                     .time_text_view);
             row.setTag(holder);
+            setupHolder(position, holder);
+            return row;
         } else {
-            holder = (ThoughtHolder) row.getTag();
+            holder = (ThoughtHolder) convertView.getTag();
+            setupHolder(position, holder);
+            return convertView;
         }
+
+    }
+
+    private void setupHolder(int position, ThoughtHolder holder) {
         ThoughtRecord record = mRecords.get(position);
         holder.triggerTextView.setText(record.getTrigger());
         holder.dateTextView.setText(record.getDate());
         holder.timeTextView.setText(record.getTime());
-        return row;
+    }
+
+    @Override
+    public void add(ThoughtRecord record) {
+        if (mRecords != null) {
+            mRecords.add(record);
+        } else {
+            mRecords = new ArrayList<>();
+            mRecords.add(record);
+        }
     }
 
     static class ThoughtHolder {

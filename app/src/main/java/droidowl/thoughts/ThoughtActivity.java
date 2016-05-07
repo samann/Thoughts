@@ -19,9 +19,6 @@ import org.androidannotations.annotations.EActivity;
 @EActivity(R.layout.activity_thought)
 public class ThoughtActivity extends BaseActivity {
 
-
-
-
     Fragment mValuesActivityFragment;
 
     Fragment mThoughtActivityFragment;
@@ -38,9 +35,14 @@ public class ThoughtActivity extends BaseActivity {
 
         final FragmentTransaction transaction = getFragmentManager()
                 .beginTransaction();
+
         transaction.add(R.id.fragment_container,
                 mThoughtActivityFragment);
-        transaction.addToBackStack("thoughts").commit();
+
+        transaction
+                .addToBackStack("thoughts")
+                .commit();
+
         try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         } catch (NullPointerException e) {
@@ -54,8 +56,9 @@ public class ThoughtActivity extends BaseActivity {
                 .withToolbar(toolbar)
                 .withTranslucentStatusBar(true)
                 .withCloseOnClick(true)
+                .withDrawerLayout(R.layout.material_drawer)
+                .withSelectedItemByPosition(0)
                 .addDrawerItems(
-                        new DividerDrawerItem(),
                         item1,
                         new DividerDrawerItem(),
                         item2,
@@ -66,7 +69,7 @@ public class ThoughtActivity extends BaseActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch (position) {
-                            case 1:
+                            case 0:
                                 if (!mThoughtActivityFragment.isAdded()) {
                                     getFragmentManager().popBackStack();
                                     getFragmentManager()
@@ -79,7 +82,7 @@ public class ThoughtActivity extends BaseActivity {
                                 }
                                 result.closeDrawer();
                                 break;
-                            case 3:
+                            case 2:
                                 if (!mValuesActivityFragment.isAdded()) {
                                     getFragmentManager().popBackStack();
                                     getFragmentManager()
@@ -92,7 +95,7 @@ public class ThoughtActivity extends BaseActivity {
                                 }
                                 result.closeDrawer();
                                 break;
-                            case 5:
+                            case 4:
                                 if (!mSettingsFragment.isAdded()) {
                                     getFragmentManager().popBackStack();
                                     getFragmentManager()
@@ -110,6 +113,5 @@ public class ThoughtActivity extends BaseActivity {
                 })
                 .build();
         result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
-        result.setSelection(item1);
     }
 }

@@ -44,7 +44,6 @@ public class ThoughtsSettingsFragment extends PreferenceFragment {
     ThoughtsApplication mApplication;
 
 
-
     @AfterPreferences
     void initPrefs() {
         notificationPref.setChecked(mPrefs.notificationsEnabled().getOr
