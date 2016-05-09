@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".ValuesActivityFragment"
+    tools:context=".ValuesFragment"
     android:weightSum="1">
 
     <ListView

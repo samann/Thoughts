@@ -17,7 +17,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
 @EActivity(R.layout.activity_thought)
-public class ThoughtActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
     Fragment mValuesActivityFragment;
 
@@ -29,9 +29,9 @@ public class ThoughtActivity extends BaseActivity {
     void setup() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mValuesActivityFragment = new ValuesActivityFragment_();
-        mThoughtActivityFragment = new ThoughtActivityFragment_();
-        mSettingsFragment = new ThoughtsSettingsFragment_();
+        mValuesActivityFragment = new ValuesFragment_();
+        mThoughtActivityFragment = new ThoughtFragment_();
+        mSettingsFragment = new SettingsFragment_();
 
         final FragmentTransaction transaction = getFragmentManager()
                 .beginTransaction();

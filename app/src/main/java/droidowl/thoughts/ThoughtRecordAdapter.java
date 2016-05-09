@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * Created by droidowl on 2/29/16.
  */
-public class ThoughtAdapter extends ArrayAdapter<ThoughtRecord> {
+public class ThoughtRecordAdapter extends ArrayAdapter<ThoughtRecord> {
     Context context;
     int id;
     List<ThoughtRecord> mRecords;
 
-    public ThoughtAdapter(Context context, int resource, List<ThoughtRecord>
+    public ThoughtRecordAdapter(Context context, int resource, List<ThoughtRecord>
      records) {
         super(context, resource, records);
         this.context = context;

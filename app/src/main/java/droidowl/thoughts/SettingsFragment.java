@@ -32,7 +32,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
  */
 @PreferenceScreen(R.xml.settings)
 @EFragment
-public class ThoughtsSettingsFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragment {
 
     @Pref
     ThoughtsPreferences_ mPrefs;

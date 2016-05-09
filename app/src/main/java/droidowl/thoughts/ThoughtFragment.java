@@ -27,19 +27,19 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 @EFragment(R.layout.fragment_thought)
-public class ThoughtActivityFragment extends Fragment {
+public class ThoughtFragment extends Fragment {
 
-    private static final String TAG = ThoughtActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
     @ViewById(R.id.thoughts_list_view)
     ListView mListView;
     @App
     ThoughtsApplication mApplication;
 
-    ThoughtAdapter mAdapter;
+    ThoughtRecordAdapter mAdapter;
     List<ThoughtRecord> mRecords;
 
 
-    public ThoughtActivityFragment() {
+    public ThoughtFragment() {
     }
 
     @AfterViews
@@ -48,7 +48,7 @@ public class ThoughtActivityFragment extends Fragment {
         toolbar.setTitle("Thoughts");
         Firebase thoughtBaseRef = mApplication.mFirebase.child(Utils.THOUGHT_RECORD_FIREBASE);
         mRecords = new ArrayList<>();
-        mAdapter = new ThoughtAdapter(getActivity(), R.layout.thought_list_item,
+        mAdapter = new ThoughtRecordAdapter(getActivity(), R.layout.thought_list_item,
                 mRecords);
 
         mListView.setAdapter(mAdapter);

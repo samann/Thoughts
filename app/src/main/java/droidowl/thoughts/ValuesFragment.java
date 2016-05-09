@@ -41,7 +41,7 @@ import java.util.List;
  * Created by droidowl on 4/26/16.
  */
 @EFragment(R.layout.fragment_values)
-public class ValuesActivityFragment extends Fragment {
+public class ValuesFragment extends Fragment {
 
     @Pref
     ThoughtsPreferences_ mPrefs;
@@ -56,7 +56,7 @@ public class ValuesActivityFragment extends Fragment {
 
     List<ThoughtValue> mValues;
 
-    public ValuesActivityFragment() {
+    public ValuesFragment() {
 
     }
 

@@ -40,14 +40,20 @@ public class ValuesAdapter extends ArrayAdapter<ThoughtValue> {
                     .value_title_textview);
             holder.rank = (TextView) row.findViewById(R.id
                     .value_rank_textview);
+            setupValue(position, holder);
             row.setTag(holder);
+            return row;
         } else {
             holder = (ValueHolder) row.getTag();
+            setupValue(position, holder);
+            return convertView;
         }
+    }
+
+    private void setupValue(int position, ValueHolder holder) {
         ThoughtValue value = mValues.get(position);
         holder.rank.setText(String.valueOf(value.getRank()));
         holder.title.setText(value.getTitle());
-        return row;
     }
 
     static class ValueHolder {
