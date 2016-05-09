@@ -1,11 +1,11 @@
 package droidowl.thoughts;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -36,45 +36,49 @@ public class ThoughtRecordActivity extends BaseActivity {
     @ViewById(R.id.errors_text_view)
     TextView errors;
 
+
+
     ThoughtRecord record;
+
+    RecordRecyclerAdapter mAdapter;
+
+    RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thought_record);
+        setContentView(R.layout.activity_view_record);
         if (getIntent().getExtras() != null) {
             Bundle extras = getIntent().getExtras();
             record = extras.getParcelable(Utils.THOUGHT_RECORD_EXTRAS);
             if (record == null) {
                 Log.d("TAG", "NULL");
             } else {
-                trigger.setText(record.getTrigger());
-                feelings.setText(record.getBeforeFeelings());
-                support.setText(record.getSupportingFacts());
-                oppose.setText(record.getOpposingFacts());
-                unhelpful.setText(record.getUnhelpfulThoughts());
-                perspective.setText(record.getNewPerspective());
-                outcome.setText(record.getOutCome());
-                String out = "";
-                if (record.getThoughtErrors() != null) {
-                    for (ThoughtError thoughtError : record.getThoughtErrors()) {
-                        out += thoughtError.getTitle() + "\n" + thoughtError
-                                .getDetail() + "\n\n";
-                    }
-                }
-                errors.setText(out);
-            }
-        }
-    }
+                mRecyclerView = (RecyclerView) findViewById(R.id
+                        .record_items_recyclerview);
+                mAdapter = new RecordRecyclerAdapter(Utils
+                        .createPiecesFromRecords(record));
 
-    @Click(R.id.edit_fab)
-    void editWasTapped() {
-        if (record != null) {
-            Intent intent = new Intent(this, CreateThoughtActivity_.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(Utils.THOUGHT_RECORD_EXTRAS, record);
-            intent.putExtras(bundle);
-            startActivity(intent);
+                LinearLayoutManager llm = new LinearLayoutManager(this);
+                mRecyclerView.setAdapter(mAdapter);
+                mRecyclerView.setLayoutManager(llm);
+
+//                trigger.setText(record.getTrigger());
+//                feelings.setText(record.getBeforeFeelings());
+//                support.setText(record.getSupportingFacts());
+//                oppose.setText(record.getOpposingFacts());
+//                unhelpful.setText(record.getUnhelpfulThoughts());
+//                perspective.setText(record.getNewPerspective());
+//                outcome.setText(record.getOutCome());
+//                String out = "";
+//                if (record.getThoughtErrors() != null) {
+//                    for (ThoughtError thoughtError : record.getThoughtErrors()) {
+//                        out += thoughtError.getTitle() + "\n" + thoughtError
+//                                .getDetail() + "\n\n";
+//                    }
+//                }
+//                errors.setText(out);
+            }
         }
     }
 }

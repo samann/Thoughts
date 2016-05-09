@@ -206,14 +206,5 @@
 
         </RelativeLayout>
     </ScrollView>
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="30dp"
-        android:id="@+id/edit_fab"
-        android:src="@android:drawable/ic_menu_edit"/>
 </RelativeLayout>
 

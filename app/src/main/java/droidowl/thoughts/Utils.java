@@ -54,4 +54,23 @@ public class Utils {
         }
         return false;
     }
+
+    protected static List<RecordPieces> createPiecesFromRecords
+            (ThoughtRecord record) {
+        List<RecordPieces> pieces = new ArrayList<>();
+        pieces.add(new RecordPieces("Trigger", record.getTrigger()));
+        pieces.add(new RecordPieces("Feelings", record.getBeforeFeelings()));
+        pieces.add(new RecordPieces("Unhelpful Thoughts", record
+                .getUnhelpfulThoughts()));
+        pieces.add(new RecordPieces("Supporting Facts", record.getSupportingFacts()));
+        pieces.add(new RecordPieces("Opposing Facts", record.getOpposingFacts()));
+        pieces.add(new RecordPieces("New Perspective", record.getNewPerspective()));
+        pieces.add(new RecordPieces("Outcome", record.getOutCome()));
+//        if (!record.getThoughtErrors().isEmpty()) {
+//            for (ThoughtError error : record.getThoughtErrors()) {
+//                pieces.add(new RecordPieces("Thinking Error", error.getDetail()));
+//            }
+//        }
+        return pieces;
+    }
 }
