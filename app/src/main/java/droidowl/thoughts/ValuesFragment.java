@@ -9,15 +9,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -30,7 +30,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
@@ -46,15 +45,16 @@ public class ValuesFragment extends Fragment {
     @Pref
     ThoughtsPreferences_ mPrefs;
 
-    @ViewById(R.id.values_list_view)
-    ListView mListView;
+    RecyclerView mListView;
 
     @App
     ThoughtsApplication mApplication;
 
-    ValuesAdapter mAdapter;
 
     List<ThoughtValue> mValues;
+
+    ValueRecyclerAdapter mAdapter;
+
 
     public ValuesFragment() {
 
@@ -66,15 +66,17 @@ public class ValuesFragment extends Fragment {
         toolbar.setTitle("Values");
         setHasOptionsMenu(true);
         mValues = new ArrayList<>();
-        mAdapter = new ValuesAdapter(getActivity(), R.layout.value_list_item, mValues);
+        mAdapter = new ValueRecyclerAdapter(mValues, getContext(), mApplication);
+        mListView = (RecyclerView) getActivity().findViewById(R.id.value_recyclerview);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         mListView.setAdapter(mAdapter);
+        mListView.setLayoutManager(llm);
         Firebase valueBase = mApplication.mFirebase.child(Utils.THOUGHT_VALUE_FIREBASE);
         valueBase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ThoughtValue value = dataSnapshot.getValue(ThoughtValue.class);
                 mValues.add(value);
-                mAdapter.notifyDataSetChanged();
                 Collections.sort(mValues);
                 mAdapter.notifyDataSetChanged();
             }
@@ -99,17 +101,17 @@ public class ValuesFragment extends Fragment {
             }
         });
 
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ThoughtValue value = mAdapter.getItem(position);
-                mApplication.mFirebase.child(Utils.THOUGHT_VALUE_FIREBASE).child(value.getKey())
-                        .removeValue();
-                mValues.remove(value);
-                mAdapter.notifyDataSetChanged();
-                return true;
-            }
-        });
+//        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                ThoughtValue value = mAdapter.getItem(position);
+//                mApplication.mFirebase.child(Utils.THOUGHT_VALUE_FIREBASE).child(value.getKey())
+//                        .removeValue();
+//                mValues.remove(value);
+//                mAdapter.notifyDataSetChanged();
+//                return true;
+//            }
+//        });
     }
 
     @Override

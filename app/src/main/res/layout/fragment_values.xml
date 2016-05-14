@@ -9,11 +9,11 @@
     tools:context=".ValuesFragment"
     android:weightSum="1">
 
-    <ListView
-        android:id="@+id/values_list_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/value_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_value_fab"
         android:layout_width="wrap_content"
